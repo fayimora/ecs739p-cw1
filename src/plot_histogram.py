@@ -7,9 +7,10 @@ length_counts = map(lambda arr: int(arr[1]), lines)
 avg = sum([x * y for x, y in zip(tweet_lengths, length_counts)]) / sum(length_counts)
 print "Mean length of characters is", avg
 
-plt.hist(tweet_lengths, 50, facecolor='green', alpha=0.5, range=(1, 1000))
-plt.ylim(0, 1000)
+# plt.hist(tweet_lengths, bins=100, facecolor='green', alpha=0.5, range=(1, 1000))
+# plt.ylim((0, 20))
+plt.bar(length_counts, tweet_lengths, color="green", log=True, width=2.0)
 plt.title("Tweet Length Histogram")
 plt.xlabel("Tweet Length")
-plt.ylabel("Occurence")
+plt.ylabel("Frequency")
 plt.show()
