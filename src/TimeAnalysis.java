@@ -14,11 +14,11 @@ public class TimeAnalysis {
     Job job = new Job(conf);
     job.setJarByClass(TweetLengthCount.class);
 
-    job.setMapperClass(AverageMapper.class);
-    job.setReducerClass(AverageReducer.class);
+    job.setMapperClass(TimeAnalysisMapper.class);
+    job.setReducerClass(TimeAnalysisReducer.class);
 
-    job.setMapOutputKeyClass(IntWritable.class);
-    job.setMapOutputValueClass(IntIntPair.class);
+    job.setMapOutputKeyClass(Text.class);
+    job.setMapOutputValueClass(IntWritable.class);
 
     job.setNumReduceTasks(4);
 

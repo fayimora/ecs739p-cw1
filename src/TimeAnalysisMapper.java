@@ -4,17 +4,16 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.commons.lang.StringUtils;
 
-public class TimeAnalysisMapper extends Mapper<Object, Text, IntWritable, IntIntPair> {
-  /* private final IntWritable one = new IntWritable(1); */
-  /* private Text data = new Text(); */
-  /*  */
-  /* public void map(Object key, Text value, Context context) throws IOException, InterruptedException { */
-  /*   String dump = value.toString(); */
-  /*   if(StringUtils.ordinalIndexOf(dump, ";", 4) > -1) { */
-  /*     int startIndex = StringUtils.ordinalIndexOf(dump,";",3) + 1; */
-  /*     String tweet = dump.substring(startIndex, dump.lastIndexOf(';')); */
-  /*     IntIntPair pair = new IntIntPair(1, tweet.length()); */
-  /*     context.write(one, pair); */
-  /*   } */
-  /* } */
+public class TimeAnalysisMapper extends Mapper<Object, Text, Text, IntWritable> {
+  private Text data = new Text();
+
+  public void map(Object key, Text value, Context context) throws IOException, InterruptedException{
+    String dump = value.toString();
+    int idIdx = StringUtils.ordinalIndexOf(dump, ";", 1) + 1;
+    int dateIdx = StringUtils.ordinalIndexOf(dump, ";", 2);
+    String dateString = dump.substring(idIdx, dateIdx).split(",")[0].trim();
+
+    IntWritable one = new IntWritable(1);
+    context.write(new Text(dateString), one);
+  }
 }
