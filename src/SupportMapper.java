@@ -8,7 +8,7 @@ public class SupportMapper extends Mapper<Object, Text, Text, IntWritable> {
   private final IntWritable one = new IntWritable(1);
   private final IntWritable zero = new IntWritable(0);
   private final Text empty = new Text("");
-  private final String[] supportPrefixes = new String[] {"team", "go", "comn", "comeon"};
+  private final String[] supportPrefixes = new String[] {"team", "go"};
   private Text data = new Text();
 
   public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
@@ -30,8 +30,7 @@ public class SupportMapper extends Mapper<Object, Text, Text, IntWritable> {
   public String getCountry(String tag) {
       for (String prefix : supportPrefixes)
           if (tag.startsWith(prefix))
-              return tag;
-              //return tag.substring(prefix.length());
+              return tag.substring(prefix.length());
       return "";
   }
 }
