@@ -30,7 +30,7 @@ public class SupportMapper extends Mapper<Object, Text, Text, IntWritable> {
   public String getCountry(String tag) {
       for (String prefix : supportPrefixes)
           if (tag.startsWith(prefix))
-              return tag.substring(prefix.length());
+              return tag.substring(prefix.length()).toLowerCase();
       return "";
   }
 }
