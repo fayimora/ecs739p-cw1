@@ -12,6 +12,7 @@ public class TimeAnalysisReducer extends Reducer<Text, IntWritable, Text, IntWri
     for(IntWritable v: values)
       count += v.get();
 
+    result.set(count);
     context.write(key, result);
   }
 }
