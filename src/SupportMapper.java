@@ -20,7 +20,7 @@ public class SupportMapper extends Mapper<Object, Text, Text, IntWritable> {
       String[] tags = dump.substring(startIndex, endIndex).split("\\s");
       for (String tag : tags) {
           supporting = getCountry(tag);
-          if (!supporting.equals("")) 
+          if (!supporting.equals(""))
               break;
       }
       context.write(new Text(supporting), supporting.equals("") ? zero : one);
