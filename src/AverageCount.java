@@ -8,30 +8,34 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class AverageCount {
-  public static void runJob(String[] input, String output) throws Exception {
-    Configuration conf = new Configuration();
-    Job job = new Job(conf);
-    job.setJarByClass(TweetLengthCount.class);
-
-    job.setMapperClass(AverageMapper.class);
-    job.setReducerClass(AverageReducer.class);
-
-    job.setMapOutputKeyClass(IntWritable.class);
-    job.setMapOutputValueClass(IntIntPair.class);
-
-    job.setNumReduceTasks(4);
-
-    Path outputPath = new Path(output);
-
-    FileInputFormat.setInputPaths(job, StringUtils.join(input, ","));
-    FileOutputFormat.setOutputPath(job, outputPath);
-
-    outputPath.getFileSystem(conf).delete(outputPath,true);
-    job.waitForCompletion(true);
-  }
-
-  public static void main(String[] args) throws Exception {
-    runJob(Arrays.copyOfRange(args, 0, args.length-1), args[args.length-1]);
-  }
+public class AverageCount 
+{
+    public static void execute(String[] input, String output) throws Exception 
+    {
+        Configuration configuration = new Configuration();
+        
+        Job hadoopJob = new Job(configuration);
+        hadoopJob.setJarByClass(TweetLengthCount.class);
+        
+        hadoopJob.setMapperClass(AverageMapper.class);
+        hadoopJob.setReducerClass(AverageReducer.class);
+        
+        hadoopJob.setMapOutputKeyClass(IntWritable.class);
+        hadoopJob.setMapOutputValueClass(IntIntPair.class);
+        
+        hadoopJob.setNumReduceTasks(4);
+        
+        Path outputPath = new Path(output);
+        
+        FileInputFormat.setInputPaths(hadoopJob, StringUtils.join(input, ","));
+        FileOutputFormat.setOutputPath(hadoopJob, outputPath);
+        
+        outputPath.getFileSystem(configuration).delete(outputPath,true);
+        hadoopJob.waitForCompletion(true);
+    }
+    
+    public static void main(String[] args) throws Exception 
+    {
+        execute(Arrays.copyOfRange(args, 0, args.length-1), args[args.length-1]);
+    }
 }
